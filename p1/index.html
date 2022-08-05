@@ -1,0 +1,68 @@
+<html>
+   <head>
+      <meta charset="UTF-8">
+      <title>Parallax Scrolling Demo</title>
+      <style>
+         body { background-color: #000000; }
+         canvas { background-color: #222222; }
+      </style>
+   </head>
+   <body onload="init();">
+      <div align="center">
+         <canvas id="game-canvas" width="512" height="384"></canvas>
+      </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.0.0/pixi.min.js"></script>
+      <script src="./Far.js"></script>
+      <script src="./Mid.js"></script>
+      <script>
+        var stage,renderer;
+        var far,mid;
+        function init() {
+            stage = new PIXI.Container();
+            // autoDetectRenderer()函数的作用是:设置舞台要想要呈现的画布宽度和高度，以及对画布本身的引用。
+            renderer = PIXI.autoDetectRenderer(512,384,
+                {view:document.getElementById("game-canvas")}
+            );
+            // 远景 背景
+            // var farTexture = PIXI.Texture.fromImage("resources/bg-far.png");
+            // far = new PIXI.Sprite(farTexture);
+            // 平铺
+            // far = new PIXI.extras.TilingSprite(farTexture, 512, 256); // 替换为这一行代码
+            // far = new Far(farTexture, 512, 256); // 用此行替换
+            far = new Far(); // 用此行替换
+
+            // far.position.x = 0;
+            // far.position.y = 0;
+            // far.tilePosition.x = 0; // 插入此行
+            // far.tilePosition.y = 0; // 插入此行
+
+            stage.addChild(far);
+            // 中间影
+            // var midTexture = PIXI.Texture.fromImage("resources/bg-mid.png");
+            // mid = new PIXI.Sprite(midTexture);
+            // 平铺
+            // mid = new PIXI.extras.TilingSprite(midTexture, 512, 256); // 替换为这一行代码
+
+            // mid.position.x = 0;
+            // mid.position.y = 128;
+            mid = new Mid();
+            stage.addChild(mid);
+
+
+            update()
+        }
+        function update() {
+            // far.position.x -= 0.128;
+            // far.tilePosition.x -= 0.5;
+            far.update();
+            
+            // mid.position.x -= 0.64;
+            // mid.tilePosition.x -= 1;
+            mid.update();
+
+            renderer.render(stage);
+            requestAnimationFrame(update);
+        }
+      </script>
+   </body>
+</html>
